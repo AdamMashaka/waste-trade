@@ -17,7 +17,8 @@ const businessSchema = new mongoose.Schema({
     password: String,
     type: String,
     walletPass: String,
-    tokenAmount: Number
+    tokenAmount: Number,
+    hederaAccID: String
 });
 
 //configure passport plugin

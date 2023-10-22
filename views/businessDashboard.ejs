@@ -138,13 +138,13 @@ Price: <span id="priceDisplay">0 Tsh</span>
         <div class="container">
             <h3>Welcome to Your Business' Dashboard</h3>
 
-            <p>Your company: <%= query %>'s wallet currently has: <%= tokens %> tokens</p>
+            <p>Your company: <%= query %>'s wallet currently has: <%= tinybars %> tinybars</p>
 
             <h3>Buy more tokens 💠</h3>
             <p>Rate: 1 💠 = 20 Tsh</p>
 
-            <h4>How many tokens do you want to buy?</h4>
-            <form action="/businessDashboard/<%= query %>" method="post" onsubmit="return validateForm()">
+            <h4>How many tinybars do you want to buy?</h4>
+            <form action="/businessDashboard/hedera/<%= query %>" method="post" onsubmit="return validateForm()">
                 <input type="number" name="token" id="tokenInput" required oninput="calculatePrice()">
                 <button type="submit">BUY</button>
             </form>
