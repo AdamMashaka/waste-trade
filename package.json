@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "run": "webpack --mode production"
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
