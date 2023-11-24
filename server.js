@@ -4,6 +4,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const http = require('http');
 const app = express();
+const PORT = process.env.PORT || 4500
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
@@ -107,6 +108,6 @@ app.all('*', (req, res) => {
     res.status(404).send('404! Oooops sorry Page Not Found')
 })
 
-server.listen(4500, () => {
+server.listen(PORT, () => {
     console.log('Server is listening on port 4500');
 })
