@@ -25,8 +25,8 @@ router.get('/:name', (req, res) => {
             // console.log(tokenAmount);
 
             res.render('consumerDashboard.ejs', {consumerName: name, tokens: tokenAmount});
-        } finally {
-            await client.close();
+        } catch(err){
+            res.status(500).send('internal server error')
         }
     }
 

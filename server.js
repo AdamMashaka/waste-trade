@@ -4,7 +4,6 @@ const session = require('express-session');
 const flash = require('express-flash');
 const http = require('http');
 const app = express();
-const MongoStore = require('connect-mongo')(session)
 const PORT = process.env.PORT || 4500
 
 const server = http.createServer(app);
@@ -48,7 +47,6 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore(),
     cookie: {maxAge: 60*60*60 },
     cookie: { secure: false }
 }))
