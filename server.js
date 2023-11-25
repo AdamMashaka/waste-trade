@@ -4,6 +4,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const http = require('http');
 const app = express();
+const MongoStore = require('connect-mongo')(session)
 const PORT = process.env.PORT || 4500
 
 const server = http.createServer(app);
@@ -40,11 +41,14 @@ app.set('view-engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.set('trust proxy', 1)
+
 //configuring express session
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: new MongoStore(),
     cookie: {maxAge: 60*60*60 },
     cookie: { secure: false }
 }))
