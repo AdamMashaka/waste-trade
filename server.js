@@ -4,6 +4,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const http = require('http');
 const app = express();
+const MemoryStore = require('memorystore')(session)
 const PORT = process.env.PORT || 4500
 
 const server = http.createServer(app);
@@ -48,7 +49,10 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {maxAge: 60*60*60 },
-    cookie: { secure: false }
+    cookie: { secure: false },
+    store: new MemoryStore({
+        checkPeriod: 86400000
+    })
 }))
 
 app.use(flash());
