@@ -32,7 +32,11 @@ router.get('/:name', connectEnsureLogin.ensureLoggedIn('/businessLogin'), (req, 
 
             res.render('businessDashboard.ejs', {query: name, tokens: bTokenAmount, tinybars: hbarBalance});
             
-        }finally {
+        }catch(err){
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...');
+        }
+        finally {
             await client.close();
         }
     }
@@ -73,7 +77,11 @@ router.post('/hedera/:name', (req, res) => {
             res.redirect(`/businessDashboard/${name}`);
 
 
-        } finally {
+        }catch(err) {
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...');
+        } 
+        finally {
             await client.close()
         }
     }
@@ -105,7 +113,11 @@ router.post('/:name', (req, res) => {
             sendSMS(businessNo, `Your company has bought: ${tokensBought} token(s), you currently have: ${currentToken}`);
 
             res.redirect(`/businessDashboard/${name}`);
-        }finally {
+        }catch(err) {
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...')
+        }
+        finally {
             client.close();
         }
     }

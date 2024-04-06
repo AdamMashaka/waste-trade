@@ -57,9 +57,9 @@ router.post('/', async (req, res) => {
             req.flash('info', 'successfully registered');
             res.redirect(`/businessDashboard/${name}`)
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('500  Internal Server Error')
+    } catch (err) {
+        console.error(`An error occured: ${err}`);
+        res.status(500).send('Internal Server Error...');
     }
 
 })

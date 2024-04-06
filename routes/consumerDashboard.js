@@ -26,7 +26,8 @@ router.get('/:name', (req, res) => {
 
             res.render('consumerDashboard.ejs', {consumerName: name, tokens: tokenAmount});
         } catch(err){
-            res.status(500).send('internal server error')
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('internal server error');
         }
     }
 

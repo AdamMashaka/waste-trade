@@ -44,7 +44,11 @@ router.get('/', (req, res) => {
             
             // console.log(detailsWithImage);
             res.render('wasteView.ejs', {details: detailsWithImage})
-        } finally {
+        }catch(err){
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...');
+        } 
+        finally {
             await client.close();
         }
     }
@@ -110,7 +114,11 @@ router.post('/buyWithToken', (req, res) => {
                 // res.redirect('/wasteView');
                 res.send('successfully paid')
             }
-        }finally {
+        }catch(err){
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...');
+        }
+        finally {
             await client.close()
         }
     }

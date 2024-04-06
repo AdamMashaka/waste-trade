@@ -52,11 +52,9 @@ router.get('/', (req, res) => {
             const cartItemsOne = cartItemsDetailsImage.flat();
             // console.log(cartItemsOne);
             res.render('cart.ejs', {items: cartItemsOne, quantity: quantity, tokens: tokens})
-        } catch(error) {
-            console.error('Error fetching data from the database:', error);
+        } catch(err) {
+            console.error(`An error occured: ${err}`);
             res.status(500).send('Internal Server Error');
-        } finally {
-            // await client.close()
         }
     }
     fetchFromCartModel()
@@ -64,19 +62,24 @@ router.get('/', (req, res) => {
 
 
 router.post('/addToCart', (req, res) => {
-    const consumerName = req.session.username;
-    const quantity = req.body.quantity;
-    const productId = req.body.productId;
-    const redirectUrl = req.body.redirectUrl;
+    try{
+        const consumerName = req.session.username;
+        const quantity = req.body.quantity;
+        const productId = req.body.productId;
+        const redirectUrl = req.body.redirectUrl;
 
-    const newItem = new cartModel({
-        consumerName: consumerName,
-        productId: productId,
-        quantity: quantity
-    });
-    newItem.save();
+        const newItem = new cartModel({
+            consumerName: consumerName,
+            productId: productId,
+            quantity: quantity
+        });
+        newItem.save();
 
-    res.redirect(redirectUrl)
+        res.redirect(redirectUrl);
+    }catch(err){
+        console.error(`An error occured: ${err}`);
+        res.status(500).send('Internal Server Error...');
+    } 
 })
 
 //deleting item from cart
@@ -98,8 +101,9 @@ router.get('/deleteFromCart/:id', (req, res) => {
             cartmodels.deleteOne({productId: id});
 
             res.redirect('/cart')
-        } finally {
-            // client.close()
+        } catch(err) {
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...')
         }
     }
     deleteFromCartModel();
