@@ -4,7 +4,6 @@ const router = express.Router();
 const Business = require('../models/business');
 const keyGen = require('../utils/keyGenerator');
 const sendSMS = require('../utils/sendSMS');
-const Hedera = require('../utils/hederaConfig');
 const {MongoClient} = require('mongodb');
 
 let uri = process.env.MONGO_URI;
@@ -23,8 +22,8 @@ router.post('/', async (req, res) => {
     var phoneNo = req.body.phoneNumber;
     var email = req.body.email;
 
-    const hederaAccountId = await Hedera();
-    console.log('hedera Acc Id:', hederaAccountId);
+    // const hederaAccountId = await Hedera();
+    // console.log('hedera Acc Id:', hederaAccountId);
 
     const walletPass = keyGen();
 
@@ -45,7 +44,6 @@ router.post('/', async (req, res) => {
                 type: type, 
                 walletPass: walletPass,
                 tokenAmount: 123,
-                hederaAccID: hederaAccountId,
                 active:false}, pass);
 
                 //Sending SMS

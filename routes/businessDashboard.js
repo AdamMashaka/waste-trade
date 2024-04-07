@@ -23,14 +23,14 @@ router.get('/:name', connectEnsureLogin.ensureLoggedIn('/businessLogin'), (req, 
 
             const businessDetails = await businesses.find({username: name}).toArray();
             const bTokenAmount = businessDetails[0].tokenAmount;
-            const hederaAccID = businessDetails[0].hederaAccID;
+            // const hederaAccID = businessDetails[0].hederaAccID;
             console.log(bTokenAmount);
 
-            const hbars = await hbarAmount(hederaAccID)
+            // const hbars = await hbarAmount(hederaAccID)
             // console.log(hbars.low);
-            const hbarBalance = hbars.low;
+            // const hbarBalance = hbars.low;
 
-            res.render('businessDashboard.ejs', {query: name, tokens: bTokenAmount, tinybars: hbarBalance});
+            res.render('businessDashboard.ejs', {query: name, tokens: bTokenAmount});
             
         }catch(err){
             console.error(`An error occured: ${err}`);

@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
                 const imageDataBuffer = product.image.data;
                 
                 return {
-                    ...product,
+                    ...product, 
                     imageDataBase64: `data:${product.image.mimeType};base64,${imageDataBuffer}`
                 };
             });

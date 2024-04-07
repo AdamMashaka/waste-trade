@@ -18,11 +18,9 @@ router.get('/:name', (req, res) => {
             const db = client.db('test');
             const consumers = db.collection('consumers');
 
-            const consumerDetails = await consumers.find({username: name}).toArray();
-            const tokenAmount = consumerDetails[0].tokenAmount;
-            // const tokenAmount = 60
+            const consumerDetails = await consumers.findOne({username: name});
+            const tokenAmount = consumerDetails.tokenAmount;
             console.log(tokenAmount);
-            // console.log(tokenAmount);
 
             res.render('consumerDashboard.ejs', {consumerName: name, tokens: tokenAmount});
         } catch(err){

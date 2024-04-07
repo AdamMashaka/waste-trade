@@ -46,7 +46,7 @@ app.set('trust proxy', 1)
 //configuring express session
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {maxAge: 60*60*60 },
     cookie: { secure: false },
