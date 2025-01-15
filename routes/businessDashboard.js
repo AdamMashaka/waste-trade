@@ -23,16 +23,20 @@ router.get('/:name', connectEnsureLogin.ensureLoggedIn('/businessLogin'), (req, 
 
             const businessDetails = await businesses.find({username: name}).toArray();
             const bTokenAmount = businessDetails[0].tokenAmount;
-            const hederaAccID = businessDetails[0].hederaAccID;
+            // const hederaAccID = businessDetails[0].hederaAccID;
             console.log(bTokenAmount);
 
-            const hbars = await hbarAmount(hederaAccID)
+            // const hbars = await hbarAmount(hederaAccID)
             // console.log(hbars.low);
-            const hbarBalance = hbars.low;
+            // const hbarBalance = hbars.low;
 
-            res.render('businessDashboard.ejs', {query: name, tokens: bTokenAmount, tinybars: hbarBalance});
+            res.render('businessDashboard.ejs', {query: name, tokens: bTokenAmount});
             
-        }finally {
+        }catch(err){
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...');
+        }
+        finally {
             await client.close();
         }
     }
@@ -73,7 +77,11 @@ router.post('/hedera/:name', (req, res) => {
             res.redirect(`/businessDashboard/${name}`);
 
 
-        } finally {
+        }catch(err) {
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...');
+        } 
+        finally {
             await client.close()
         }
     }
@@ -105,7 +113,11 @@ router.post('/:name', (req, res) => {
             sendSMS(businessNo, `Your company has bought: ${tokensBought} token(s), you currently have: ${currentToken}`);
 
             res.redirect(`/businessDashboard/${name}`);
-        }finally {
+        }catch(err) {
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...')
+        }
+        finally {
             client.close();
         }
     }

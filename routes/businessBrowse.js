@@ -22,14 +22,18 @@ router.get('/', (req, res) => {
                 const imageDataBuffer = product.image.data;
                 
                 return {
-                    ...product,
+                    ...product, 
                     imageDataBase64: `data:${product.image.mimeType};base64,${imageDataBuffer}`
                 };
             });
             const productDetailsJson = JSON.parse(JSON.stringify(productData));
             
             res.json(productDetailsJson);
-        }finally{
+        }catch(err) {
+            console.error(`An Error occured: ${err}`);
+            res.status(500).send('Internal Server Error');
+        }
+        finally{
             await client.close();
         }
     }

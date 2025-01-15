@@ -4,6 +4,8 @@ const session = require('express-session');
 const flash = require('express-flash');
 const http = require('http');
 const app = express();
+const MemoryStore = require('memorystore')(session)
+const PORT = process.env.PORT || 4500
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
@@ -39,13 +41,18 @@ app.set('view-engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.set('trust proxy', 1)
+
 //configuring express session
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {maxAge: 60*60*60 },
-    cookie: { secure: false }
+    cookie: { secure: false },
+    store: new MemoryStore({
+        checkPeriod: 86400000
+    })
 }))
 
 app.use(flash());
@@ -107,6 +114,6 @@ app.all('*', (req, res) => {
     res.status(404).send('404! Oooops sorry Page Not Found')
 })
 
-server.listen(4500, () => {
+server.listen(PORT, () => {
     console.log('Server is listening on port 4500');
 })

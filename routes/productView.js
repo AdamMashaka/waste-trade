@@ -43,7 +43,11 @@ router.get('/', (req, res) => {
             });
 
             res.render('productView.ejs', {details: detailsWithImage})
-        }finally {
+        }catch(err) {
+            console.error(`An error occured: ${err}`);
+            res.status(500).send('Internal Server Error...');
+        }
+        finally {
             await client.close();
         }
     }
